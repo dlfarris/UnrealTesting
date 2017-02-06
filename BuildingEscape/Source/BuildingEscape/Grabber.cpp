@@ -22,11 +22,15 @@ void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Grabber is Here!"));
-
 	PlayerController = GetWorld()->GetFirstPlayerController();
 
+	FindPhysicsHandleComponent();
+	SetupInputComponent();
+}
 
+// Look for attached Physics Handle
+void UGrabber::FindPhysicsHandleComponent()
+{
 	/// Look for attached Physics Handle
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (PhysicsHandle)
@@ -37,7 +41,11 @@ void UGrabber::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s missing PhysicsHandle Component"), *(GetOwner()->GetName()));
 	}
+}
 
+// Look for attached INput Compontnet (only appears at run time)
+void UGrabber::SetupInputComponent()
+{
 	/// Look for Input Handler
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (InputComponent)
@@ -53,16 +61,57 @@ void UGrabber::BeginPlay()
 	}
 }
 
+
 void UGrabber::Grab()
+{
+	FHitResult HitResult = GetFirstPhysicsBodyInReach();
+	UPrimitiveComponent* ComponentToGrab = HitResult.GetComponent();
+
+	if (HitResult.GetActor() != nullptr)
+	{
+		PhysicsHandle->GrabComponent(ComponentToGrab,
+			NAME_None,
+			ComponentToGrab->GetOwner()->GetActorLocation(),
+			true);
+	}
+}
+
+void UGrabber::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Key Released"));
+	PhysicsHandle->ReleaseComponent();
+}
+
+
+// Called every frame
+void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
+{
+	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	PlayerController->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
+
+	/// Draw a red trace in the world to visualize
+	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
+
+	if (PhysicsHandle->GrabbedComponent)
+	{
+		//Move the object
+		PhysicsHandle->SetTargetLocation(LineTraceEnd);
+	}
+}
+
+const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
 	/// Get Player viewpoint
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 	PlayerController->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
 
-	// Draw a red trace in the world to visualize
+	/// Draw a red trace in the world to visualize
 	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
-	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEnd, FColor(255, 0, 0), false, 0.f, 0, 10.f);
+	//DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEnd, FColor(255, 0, 0), false, 0.f, 0, 10.f);
 
 	/// setup query parameters
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
@@ -81,25 +130,7 @@ void UGrabber::Grab()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *(Hit.Actor->GetName()));
 	}
-}
 
-void UGrabber::Release()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Key Released"));
-}
-
-
-// Called every frame
-void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
-{
-	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-
-
-	//UE_LOG(LogTemp, Warning, TEXT("Location: %s, Rotation: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
-
-	
-
-	// see what we hit
+	return Hit;
 }
 
