@@ -17,7 +17,7 @@ void EmptyLinkFunctionForGeneratedCode1BuildingEscape() {}
 	void UGrabber::StaticRegisterNativesUGrabber()
 	{
 	}
-	IMPLEMENT_CLASS(UGrabber, 445687644);
+	IMPLEMENT_CLASS(UGrabber, 2209321126);
 	void UOpenDoor::StaticRegisterNativesUOpenDoor()
 	{
 	}
@@ -92,6 +92,9 @@ void EmptyLinkFunctionForGeneratedCode1BuildingEscape() {}
 				OuterClass->ClassFlags |= 0x20B00080;
 
 
+PRAGMA_DISABLE_DEPRECATION_WARNINGS
+				UProperty* NewProp_Reach = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("Reach"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(Reach, UGrabber), 0x0040000000000001);
+PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				OuterClass->StaticLink();
 #if WITH_METADATA
 				UMetaData* MetaData = OuterClass->GetOutermost()->GetMetaData();
@@ -99,6 +102,8 @@ void EmptyLinkFunctionForGeneratedCode1BuildingEscape() {}
 				MetaData->SetValue(OuterClass, TEXT("ClassGroupNames"), TEXT("Custom"));
 				MetaData->SetValue(OuterClass, TEXT("IncludePath"), TEXT("Grabber.h"));
 				MetaData->SetValue(OuterClass, TEXT("ModuleRelativePath"), TEXT("Grabber.h"));
+				MetaData->SetValue(NewProp_Reach, TEXT("Category"), TEXT("Grabber"));
+				MetaData->SetValue(NewProp_Reach, TEXT("ModuleRelativePath"), TEXT("Grabber.h"));
 #endif
 			}
 		}
@@ -192,7 +197,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/BuildingEscape")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0xE17E7BBB;
+			Guid.A = 0x32A7C112;
 			Guid.B = 0x8FA253A2;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;

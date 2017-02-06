@@ -23,6 +23,8 @@ public:
 
 private:
 
+	UPROPERTY(EditAnywhere)
+	float Reach = 100.0f;
+
 	APlayerController* PlayerController;
-	
 };
