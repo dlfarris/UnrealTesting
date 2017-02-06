@@ -27,4 +27,12 @@ private:
 	float Reach = 100.0f;
 
 	APlayerController* PlayerController;
+
+	UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	UInputComponent* InputComponent = nullptr;
+
+	// Ray-cast and grab what's in reach
+	void Grab();
+
+	void Release();
 };
