@@ -28,7 +28,7 @@ private:
 
 	FVector LineTraceEnd;
 
-	APlayerController* PlayerController;
+	APlayerController* PlayerController = nullptr;
 
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* InputComponent = nullptr;

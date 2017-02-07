@@ -23,6 +23,10 @@ void UGrabber::BeginPlay()
 	Super::BeginPlay();
 
 	PlayerController = GetWorld()->GetFirstPlayerController();
+	if (PlayerController == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Could not find PlayerController"));
+	}
 
 	FindPhysicsHandleComponent();
 	SetupInputComponent();
@@ -62,6 +66,8 @@ void UGrabber::Grab()
 	FHitResult HitResult = GetFirstPhysicsBodyInReach();
 	UPrimitiveComponent* ComponentToGrab = HitResult.GetComponent();
 
+	if (!PhysicsHandle) { return; }
+
 	if (HitResult.GetActor() != nullptr)
 	{
 		PhysicsHandle->GrabComponent(ComponentToGrab,
@@ -81,6 +87,8 @@ void UGrabber::Release()
 void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
+
+	if (!PhysicsHandle) { return; }
 
 	if (PhysicsHandle->GrabbedComponent)
 	{
