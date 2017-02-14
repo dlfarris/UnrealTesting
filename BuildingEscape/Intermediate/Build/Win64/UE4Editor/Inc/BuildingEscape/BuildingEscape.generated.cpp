@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCode1BuildingEscape() {}
 	void UOpenDoor::StaticRegisterNativesUOpenDoor()
 	{
 	}
-	IMPLEMENT_CLASS(UOpenDoor, 71706912);
+	IMPLEMENT_CLASS(UOpenDoor, 2295030514);
 	void UPositionReport::StaticRegisterNativesUPositionReport()
 	{
 	}
@@ -36,6 +36,7 @@ void EmptyLinkFunctionForGeneratedCode1BuildingEscape() {}
 	BUILDINGESCAPE_API class UClass* Z_Construct_UClass_ABuildingEscapeGameModeBase();
 	BUILDINGESCAPE_API class UClass* Z_Construct_UClass_UGrabber_NoRegister();
 	BUILDINGESCAPE_API class UClass* Z_Construct_UClass_UGrabber();
+	BUILDINGESCAPE_API class UFunction* Z_Construct_UDelegateFunction_BuildingEscape_OnOpenRequest__DelegateSignature();
 	BUILDINGESCAPE_API class UClass* Z_Construct_UClass_UOpenDoor_NoRegister();
 	BUILDINGESCAPE_API class UClass* Z_Construct_UClass_UOpenDoor();
 	BUILDINGESCAPE_API class UClass* Z_Construct_UClass_UPositionReport_NoRegister();
@@ -112,6 +113,22 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 	}
 	static FCompiledInDefer Z_CompiledInDefer_UClass_UGrabber(Z_Construct_UClass_UGrabber, &UGrabber::StaticClass, TEXT("UGrabber"), false, nullptr, nullptr, nullptr);
 	DEFINE_VTABLE_PTR_HELPER_CTOR(UGrabber);
+	UFunction* Z_Construct_UDelegateFunction_BuildingEscape_OnOpenRequest__DelegateSignature()
+	{
+		UObject* Outer=Z_Construct_UPackage__Script_BuildingEscape();
+		static UFunction* ReturnFunction = NULL;
+		if (!ReturnFunction)
+		{
+			ReturnFunction = new(EC_InternalUseOnlyConstructor, Outer, TEXT("OnOpenRequest__DelegateSignature"), RF_Public|RF_Transient|RF_MarkAsNative) UDelegateFunction(FObjectInitializer(), NULL, 0x00130000, 65535);
+			ReturnFunction->Bind();
+			ReturnFunction->StaticLink();
+#if WITH_METADATA
+			UMetaData* MetaData = ReturnFunction->GetOutermost()->GetMetaData();
+			MetaData->SetValue(ReturnFunction, TEXT("ModuleRelativePath"), TEXT("OpenDoor.h"));
+#endif
+		}
+		return ReturnFunction;
+	}
 	UClass* Z_Construct_UClass_UOpenDoor_NoRegister()
 	{
 		return UOpenDoor::StaticClass();
@@ -135,6 +152,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 				UProperty* NewProp_DoorCloseDelay = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("DoorCloseDelay"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(DoorCloseDelay, UOpenDoor), 0x0040000000000001);
 				UProperty* NewProp_PressurePlate = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("PressurePlate"), RF_Public|RF_Transient|RF_MarkAsNative) UObjectProperty(CPP_PROPERTY_BASE(PressurePlate, UOpenDoor), 0x0040000000000001, Z_Construct_UClass_ATriggerVolume_NoRegister());
 				UProperty* NewProp_OpenAngle = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("OpenAngle"), RF_Public|RF_Transient|RF_MarkAsNative) UFloatProperty(CPP_PROPERTY_BASE(OpenAngle, UOpenDoor), 0x0040000000000001);
+				UProperty* NewProp_OnOpenRequest = new(EC_InternalUseOnlyConstructor, OuterClass, TEXT("OnOpenRequest"), RF_Public|RF_Transient|RF_MarkAsNative) UMulticastDelegateProperty(CPP_PROPERTY_BASE(OnOpenRequest, UOpenDoor), 0x0010000010080000, Z_Construct_UDelegateFunction_BuildingEscape_OnOpenRequest__DelegateSignature());
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				OuterClass->StaticLink();
 #if WITH_METADATA
@@ -151,6 +169,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 				MetaData->SetValue(NewProp_PressurePlate, TEXT("ModuleRelativePath"), TEXT("OpenDoor.h"));
 				MetaData->SetValue(NewProp_OpenAngle, TEXT("Category"), TEXT("OpenDoor"));
 				MetaData->SetValue(NewProp_OpenAngle, TEXT("ModuleRelativePath"), TEXT("OpenDoor.h"));
+				MetaData->SetValue(NewProp_OnOpenRequest, TEXT("ModuleRelativePath"), TEXT("OpenDoor.h"));
 #endif
 			}
 		}
@@ -200,12 +219,13 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 			ReturnPackage = CastChecked<UPackage>(StaticFindObjectFast(UPackage::StaticClass(), NULL, FName(TEXT("/Script/BuildingEscape")), false, false));
 			ReturnPackage->SetPackageFlags(PKG_CompiledIn | 0x00000000);
 			FGuid Guid;
-			Guid.A = 0x7C313402;
-			Guid.B = 0x8FA253A2;
+			Guid.A = 0x45665624;
+			Guid.B = 0x56F12CD0;
 			Guid.C = 0x00000000;
 			Guid.D = 0x00000000;
 			ReturnPackage->SetGuid(Guid);
 
+			Z_Construct_UDelegateFunction_BuildingEscape_OnOpenRequest__DelegateSignature();
 		}
 		return ReturnPackage;
 	}
